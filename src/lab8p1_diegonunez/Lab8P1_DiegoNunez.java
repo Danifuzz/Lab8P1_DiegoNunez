@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package lab8p1_diegonunez;
 
@@ -18,6 +18,8 @@ public class Lab8P1_DiegoNunez {
      */
     public static void main(String[] args) {
         int fila = 0;
+        boolean victoria = false;
+         System.out.println(victoria);
         int columna = 0;
       SecureRandom random = new SecureRandom(); 
       Scanner entrada = new Scanner(System.in);
@@ -28,62 +30,132 @@ public class Lab8P1_DiegoNunez {
       if (ejercicio == 1) {
       
       char[][]tablero = new char[5][5];
-        int r = random.nextInt(1,6);
-        int u = random.nextInt(1,10);
+        int movimiento = random.nextInt(1,6);
+        int acum = random.nextInt(1,10);
         Generartablero(tablero);
-        char puntero = tablero[0][0];
-        while (u<60) {
-            Imprimirtablero(tablero);
-            
-           
-                if (columna + r >4) {
-                    
-                    if (tablero[fila][columna]==('M')) {
-                        if (columna + r +1>4) {
-                       r= r-4;
-                       
-                        } else if (columna + r+1<5) {
-                            r++;
-                        }
-                    } else if (tablero[fila][columna]==('D')) {
-                        r = 0;
-                    } else if (tablero[fila][columna]==('L')) {
-                        if (columna + r +3 <5 )
-                        r = r+3;
-                        
-                    } else if (columna + r +3 >4) {
-                        r=r-2;
-                    }
-                    
-                    tablero[fila][columna] = ' ';
-                    if (fila+1<5){
-                    fila ++;
-                    } else {
-                         System.out.println("Numero al azar:" +r);
-                        System.out.println("El juego termino");
-                        break;
-                    }
-                    columna = columna + r -5;
-                    puntero = tablero[fila][columna];
-                    tablero[fila][columna] = 'E';
-            }   else if (columna + r <5) {
-                
-                
-                
-                    tablero[fila][columna] = ' ';
-                    columna = columna + r;
-                    puntero = tablero[fila][columna];
-                    tablero[fila][columna] = 'E';
+        char puntero = tablero[fila][columna];
+        while (acum<60) {
+            if (fila>4) {
+                System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
             }
+            Imprimirtablero(tablero);
+            int columnao = columna;
+            tablero[fila][columna] = ' ';
+            columna = columna + movimiento;
+            if (tablero[4][4] == 'E') {
+                System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio.");
+                break;
+            }
+            if (columna>4) {
+                fila++;
+                columna=ValidarColumna(columna);
+            }
+            if (tablero[fila][columna] == ('D')) {
+                System.out.println("Tu profesor te da miedo... regresaste a donde estabas.");
+                columna = columnao; 
+            } else if (tablero[fila][columna] == ('L')) {
+                System.out.println("Tu companero de programacion te ayudo a avanzar 3 casillas!");
+                columna = columna + 3;
+                if (columna > 4) {
+                    columna=ValidarColumna(columna);
+                    if (fila+1>4 || tablero[4][4] == 'E') {
+                        tablero[4][4] = 'E';
+                        fila =4;
+                        System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+                    } else {
+                    fila++;
+                    }
+                    if (fila+1>4 || tablero[4][4] == 'E') {
+                        tablero[4][4] = 'E';
+                        System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+                    }
+                }
+                if (fila+1>4 || tablero[4][4] == 'E') {
+                    fila=4;
+                    tablero[4][4] = 'E';
+                    System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+                    }
+            } else if (tablero[fila][columna] == ('M')) {
+                System.out.println("Tu companero de matematicas te ayudo avanzar una casilla!");
+                columna++;
+                if (columna > 4) {
+                    fila++;
+                    columna=ValidarColumna(columna);
+                    if (fila>4) {
+                        fila =4;
+                        tablero[4][4] = 'E';
+                        System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+            }
+                }
                 
-            System.out.println(u);
-            System.out.println("Numero al azar:" +r);
-            u = u+ random.nextInt(1,10);
-            r = random.nextInt(1,5);
+                
+            } else {
+                if (columna>4) {
+                    if (fila>4) {
+                        fila =4;
+                        tablero[4][4] = 'E';
+                        System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+            }
+                    fila++;
+                    columna=ValidarColumna(columna);
+                }
+                
+            }
+            
+            if (fila>4){
+                fila = 4;
+                System.out.println("Lograste llegar a la parada de buses a tiempo");
+
+                System.out.println("Escapaste del laboratorio");
+                tablero[4][4] = 'E';
+                break;
+            } else {
+                tablero[fila][columna] = 'E';
+            }
+            
+            System.out.println("");
+
+            System.out.println("Tiempo transcurrido:" +acum +"minutos");
+            System.out.println("Movimientos realizados:" +movimiento);
+            acum = acum+ random.nextInt(1,10);
+            movimiento = random.nextInt(1,5);
                     System.out.println("");
+            if (tablero[4][4]=='E'){
+                System.out.println("Lograste llegar a la parada de buses a tiempo");
+                System.out.println("Escapaste del Laboratorio!");
+                break;
+            }
+                    if (acum>=60) {
+                        System.out.println("Se acabo el tiempo! no escapaste del laboratorio");
+                    } 
+                    
         
     }
+          System.out.println("");
+        Imprimirtablero(tablero);
+          
       }
+     
     }
     public static void Imprimirtablero(char[][]tablero) {
         for (int i = 0; i < tablero.length; i++) {
@@ -113,4 +185,13 @@ public class Lab8P1_DiegoNunez {
         tablero[3][4] = 'L';
         return tablero;
     }
+    public static int ValidarColumna(int columna) {
+        while (columna > 4) {
+        if(columna >= 5) {
+            columna = columna-5;
+        }
+        }
+    return (columna);   
+    }
 }
+
