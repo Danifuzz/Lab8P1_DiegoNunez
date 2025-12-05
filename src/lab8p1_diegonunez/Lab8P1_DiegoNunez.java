@@ -37,11 +37,29 @@ public class Lab8P1_DiegoNunez {
             
            
                 if (columna + r >4) {
+                    
+                    if (tablero[fila][columna]==('M')) {
+                        if (columna + r +1>4) {
+                       r= r-4;
+                       
+                        } else if (columna + r+1<5) {
+                            r++;
+                        }
+                    } else if (tablero[fila][columna]==('D')) {
+                        r = 0;
+                    } else if (tablero[fila][columna]==('L')) {
+                        if (columna + r +3 <5 )
+                        r = r+3;
+                        
+                    } else if (columna + r +3 >4) {
+                        r=r-2;
+                    }
+                    
                     tablero[fila][columna] = ' ';
                     if (fila+1<5){
                     fila ++;
                     } else {
-                        
+                         System.out.println("Numero al azar:" +r);
                         System.out.println("El juego termino");
                         break;
                     }
@@ -49,6 +67,9 @@ public class Lab8P1_DiegoNunez {
                     puntero = tablero[fila][columna];
                     tablero[fila][columna] = 'E';
             }   else if (columna + r <5) {
+                
+                
+                
                     tablero[fila][columna] = ' ';
                     columna = columna + r;
                     puntero = tablero[fila][columna];
@@ -56,7 +77,7 @@ public class Lab8P1_DiegoNunez {
             }
                 
             System.out.println(u);
-            System.out.println("Numero al azar" +r);
+            System.out.println("Numero al azar:" +r);
             u = u+ random.nextInt(1,10);
             r = random.nextInt(1,5);
                     System.out.println("");
