@@ -19,6 +19,7 @@ public class Nuevo {
     public static void main(String[] args) {
         int fila = 0;
         boolean victoria = false;
+         System.out.println(victoria);
         int columna = 0;
       SecureRandom random = new SecureRandom(); 
       Scanner entrada = new Scanner(System.in);
@@ -42,31 +43,51 @@ public class Nuevo {
             int columnao = columna;
             tablero[fila][columna] = ' ';
             columna = columna + r;
+            if (tablero[4][4] == 'E') {
+                System.out.println("Felicidades! Escapo del laboratorio.");
+                break;
+            }
             if (columna>4) {
                 fila++;
                 columna=ValidarColumna(columna);
             }
             if (tablero[fila][columna] == ('D')) {
+                System.out.println("Tu profesor te da miedo... regresaste a donde estabas.");
                 columna = columnao; 
             } else if (tablero[fila][columna] == ('L')) {
+                System.out.println("Tu companero de programacion te ayudo a avanzar 3 casillas!");
                 columna = columna + 3;
                 if (columna > 4) {
-                    if (fila+1>4) {
+                    columna=ValidarColumna(columna);
+                    if (fila+1>4 || tablero[4][4] == 'E') {
+                        tablero[4][4] = 'E';
+                        fila =4;
                 System.out.println("Felicidades! Escapo del laboratorio!");
                 break;
                     } else {
                     fila++;
                     }
-                columna=ValidarColumna(columna);
+                    if (fila+1>4 || tablero[4][4] == 'E') {
+                        tablero[4][4] = 'E';
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+                    }
                 }
-                
+                if (fila+1>4 || tablero[4][4] == 'E') {
+                    fila=4;
+                    tablero[4][4] = 'E';
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+                    }
             } else if (tablero[fila][columna] == ('M')) {
-                
+                System.out.println("Tu companero de matematicas te ayudo avanzar una casilla!");
                 columna++;
                 if (columna > 4) {
                     fila++;
                     columna=ValidarColumna(columna);
                     if (fila>4) {
+                        fila =4;
+                        tablero[4][4] = 'E';
                 System.out.println("Felicidades! Escapo del laboratorio!");
                 break;
             }
@@ -75,6 +96,12 @@ public class Nuevo {
                 
             } else {
                 if (columna>4) {
+                    if (fila>4) {
+                        fila =4;
+                        tablero[4][4] = 'E';
+                System.out.println("Felicidades! Escapo del laboratorio!");
+                break;
+            }
                     fila++;
                     columna=ValidarColumna(columna);
                 }
@@ -82,6 +109,7 @@ public class Nuevo {
             }
             
             if (fila>4){
+                fila = 4;
                 System.out.println("Escapaste del laboratorio");
                 tablero[4][4] = 'E';
                 break;
@@ -92,20 +120,26 @@ public class Nuevo {
             System.out.println("");
             System.out.println(columna);
 
-            System.out.println(u);
-            System.out.println("Numero al azar:" +r);
+            System.out.println("Tiempo transcurrido:" +u);
+            System.out.println("Movimientos realizados:" +r);
             u = u+ random.nextInt(1,10);
             r = random.nextInt(1,5);
                     System.out.println("");
+            if (tablero[4][4]=='E'){
+                System.out.println("Escapaste del Laboratorio!");
+                break;
+            }
                     if (u>=60) {
                         System.out.println("Se acabo el tiempo! no escapaste del laboratorio");
                     } 
+                    
         
     }
-        
-         
-          System.out.println(victoria);
+          System.out.println("");
+        Imprimirtablero(tablero);
+          
       }
+     
     }
     public static void Imprimirtablero(char[][]tablero) {
         for (int i = 0; i < tablero.length; i++) {
@@ -136,10 +170,10 @@ public class Nuevo {
         return tablero;
     }
     public static int ValidarColumna(int columna) {
+        while (columna > 4) {
         if(columna >= 5) {
             columna = columna-5;
-        } else {
-            columna = columna;
+        }
         }
     return (columna);   
     }
